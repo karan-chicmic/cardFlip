@@ -330,6 +330,10 @@
         "__expectedType__": "cc.SpriteFrame"
       }
     ],
+    "background": {
+      "__uuid__": "89cd45ea-412e-4629-9752-544e5ad6e286@f9941",
+      "__expectedType__": "cc.SpriteFrame"
+    },
     "_id": ""
   },
   {

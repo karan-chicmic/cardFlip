@@ -5,10 +5,17 @@ const { ccclass, property } = _decorator;
 export class addImage extends Component {
     @property({ type: [SpriteFrame] })
     imgArray: [SpriteFrame] | [] = [];
+
+    @property({ type: SpriteFrame })
+    background: SpriteFrame;
     start() {}
 
     update(deltaTime: number) {}
     setCard() {
         this.node.getComponent(Sprite).spriteFrame = this.imgArray[randomRangeInt(0, this.imgArray.length)];
+    }
+
+    setBackground() {
+        this.node.getComponent(Sprite).spriteFrame = this.background;
     }
 }

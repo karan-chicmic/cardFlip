@@ -21,16 +21,17 @@ export class flip extends Component {
     @property({ type: Prefab })
     cardPrefab: Prefab;
 
+    @property({ type: Prefab })
+    labelPrefab: Prefab;
+
     totalCard = 7;
     lastSecondCard: Node;
-
-    @property({ type: Node })
-    label: Node = null;
 
     start() {
         for (let i = 0; i < this.totalCard; i++) {
             const card = instantiate(this.cardPrefab);
-            card.getComponent(addImage).setCard();
+            // card.getComponent(addImage).setCard();
+            card.getComponent(addImage).setBackground();
 
             if (i % 2 == 0) {
                 card.setPosition(-750 + i * 200, 200, 0);
@@ -59,23 +60,26 @@ export class flip extends Component {
     update(deltaTime: number) {}
 
     onSpriteClick(event: EventMouse) {
+        var label = instantiate(this.labelPrefab);
         const clickedSprite = event.currentTarget;
+        this.node.getParent().addChild(label);
 
+        console.log(this.node.getParent().children);
         tween(clickedSprite)
             .to(0.3, { scale: new Vec3(0, 1, 0) })
             // .to(0.6, {scale: new Vec3(0, 0, 0)})
             .call(() => {
                 clickedSprite.getComponent(addImage).setCard();
+                // clickedSprite.addChild(label);
+                label.addComponent(Label);
+                label.setPosition(clickedSprite.getPosition());
+                label.getComponent(Label).string = randomRangeInt(0, 10).toString();
+                console.log(label.getComponent(Label).string);
             })
-            .to(0.3, { scale: new Vec3(-1, 1, 0) })
+            .to(0.3, { scale: new Vec3(1, 1, 0) })
             .start();
-        clickedSprite.addChild(this.label);
-        this.label.setPosition(clickedSprite.getPosition());
-        console.log("executed line 73");
-        this.label.getComponent(Label).string = randomRangeInt(0, 10).toString();
-        console.log("executed line 75");
 
-        console.log(this.label.getComponent(Label).string);
+        // console.log(label.getComponent(Label).string);
 
         // this.label.getComponent(Label).string = randomNumber.toString();
     }
