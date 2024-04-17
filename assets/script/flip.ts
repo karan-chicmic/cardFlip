@@ -24,8 +24,8 @@ export class flip extends Component {
     totalCard = 7;
     lastSecondCard: Node;
 
-    // @property({ type: Label })
-    // label: Label = null;
+    @property({ type: Node })
+    label: Node = null;
 
     start() {
         for (let i = 0; i < this.totalCard; i++) {
@@ -60,7 +60,6 @@ export class flip extends Component {
 
     onSpriteClick(event: EventMouse) {
         const clickedSprite = event.currentTarget;
-        // clickedSprite.addChild(this.label);
 
         tween(clickedSprite)
             .to(0.3, { scale: new Vec3(0, 1, 0) })
@@ -70,8 +69,13 @@ export class flip extends Component {
             })
             .to(0.3, { scale: new Vec3(-1, 1, 0) })
             .start();
+        clickedSprite.addChild(this.label);
+        this.label.setPosition(clickedSprite.getPosition());
+        console.log("executed line 73");
+        this.label.getComponent(Label).string = randomRangeInt(0, 10).toString();
+        console.log("executed line 75");
 
-        const randomNumber = randomRangeInt(0, 9);
+        console.log(this.label.getComponent(Label).string);
 
         // this.label.getComponent(Label).string = randomNumber.toString();
     }
