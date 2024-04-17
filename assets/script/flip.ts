@@ -28,6 +28,7 @@ export class flip extends Component {
         for (let i = 0; i < 7; i++) {
             const card = instantiate(this.cardPrefab);
             card.getComponent(addImage).setCard();
+
             card.setPosition(-750 + i * 200, 0, 0);
             this.node.addChild(card);
 
@@ -46,14 +47,19 @@ export class flip extends Component {
 
     onSpriteClick(event: EventMouse) {
         const clickedSprite = event.currentTarget;
+        // clickedSprite.addChild(this.label);
 
         tween(clickedSprite)
-            .to(0.5, { scale: new Vec3(0, 1, 0) })
-            .to(0.5, { scale: new Vec3(-1, 1, 0) })
+            .to(0.3, { scale: new Vec3(0, 1, 0) })
+            // .to(0.6, {scale: new Vec3(0, 0, 0)})
+            .call(() => {
+                clickedSprite.getComponent(addImage).setCard();
+            })
+            .to(0.3, { scale: new Vec3(-1, 1, 0) })
             .start();
 
         const randomNumber = randomRangeInt(0, 9);
 
-        clickedSprite.getChildByName("Label").getComponent(Label).string = randomNumber.toString();
+        // this.label.getComponent(Label).string = randomNumber.toString();
     }
 }
