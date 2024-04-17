@@ -21,15 +21,28 @@ export class flip extends Component {
     @property({ type: Prefab })
     cardPrefab: Prefab;
 
+    totalCard = 7;
+    lastSecondCard: Node;
+
     // @property({ type: Label })
     // label: Label = null;
 
     start() {
-        for (let i = 0; i < 7; i++) {
+        for (let i = 0; i < this.totalCard; i++) {
             const card = instantiate(this.cardPrefab);
             card.getComponent(addImage).setCard();
 
-            card.setPosition(-750 + i * 200, 0, 0);
+            if (i % 2 == 0) {
+                card.setPosition(-750 + i * 200, 200, 0);
+            } else {
+                card.setPosition(-750 + (i - 1) * 200, -200, 0);
+            }
+            if (i == this.totalCard - 2) {
+                this.lastSecondCard = card;
+            }
+            if (i == this.totalCard - 1 && !(this.totalCard % 2 == 0)) {
+                card.setPosition(this.lastSecondCard.getPosition().x + 350, 0, 0);
+            }
             this.node.addChild(card);
 
             card.on(
